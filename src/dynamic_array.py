@@ -12,7 +12,7 @@ class DynamicArray:
         #TODO: make array dynamically resize
             self.double_size()
             # print("ERROR :Array is full")
-            return
+            
 
     #make sure index in range
         if index > self.count:
@@ -20,9 +20,10 @@ class DynamicArray:
 
 
     #shift everything over to the right
-    #start with the last one, move it ot the right
-    #strting, stopping, iterative
+    #start with the last one, move it to the right
+    #starting, stopping, iterative
         for i in range(self.count, index, -1):
+            #move them one at a time, becomes whatever is to the left of it
             self.storage[i] = self.storage[i-1]
 
 
