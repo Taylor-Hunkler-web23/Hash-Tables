@@ -52,16 +52,17 @@ class HashTable:
         Fill this in.
         '''
         
-    #hash the key
+    #take key and turn it into an index in array 
         index = self._hash_mod(key)
 
-    #if something already at the index
-
+    #check if something already at the index
         if self.storage[index] is not None:
             print("Error: something at that index already")
 
-    # setting value at index
-        self.storage[index] = LinkedPair(key, value)
+    #else put it there
+        else:
+    # setting value at index to linked pair with they key and value
+            self.storage[index] = LinkedPair(key, value)
 
 
 
@@ -80,9 +81,11 @@ class HashTable:
   # Print a warning if the key is not found
         if self.storage[index] is None:
             print("Error: key not found")
+        else:
 
        #index reassigned to none
-        self.storage[index] =None
+            self.storage[index] =None
+            
 
         
 
@@ -98,8 +101,19 @@ class HashTable:
         #index
         index = self._hash_mod(key)
 
-# Retrieve the value stored with the given key.
-        return self.storage[index].value
+        if self.storage[index] is not None:
+
+    #if key matches
+            if self.storage[index].key == key:
+    # Retrieve the value stored with the given key.
+                return self.storage[index].value
+
+    #else, key not found, return none
+            else:
+                print("Error: key does not match")
+                return None
+        else:
+                return None
 
 
 
@@ -115,14 +129,12 @@ class HashTable:
 
 #rehash indexes
         for new_item in self.storage:
-            #newindex is the key
-            new_index = self._hash_mod(new_item.key)
-            #newstorage = Linked pair
-            new_storage[new_index] = LinkedPair(new_item.key, new_item.value)
+            if new_item is not None:
 
-        # for i in range(self.count):
-        #     #new storage becomes old storage
-        #     new_storage[i] = self.storage[i]
+            #newindex rehashed
+                new_index = self._hash_mod(new_item.key)
+            #newstorage = LinkedPair
+                new_storage[new_index] = LinkedPair(new_item.key, new_item.value)
 
         self.storage=new_storage
 
