@@ -151,18 +151,16 @@ class HashTable:
         for bucket_item in old_storage:
             #if bucket_item not none
             if bucket_item is not None:
-             
+                #set to bucket_item current
+                current = bucket_item
+                #while there is current
+                while current:
                     #add key value
-                    self.insert(bucket_item.key, bucket_item.value)
-                    #set current to next bucket_item
-                    
+                    self.insert(current.key, current.value)
+                    #set current to next 
+                    current = current.next
 
-        #     #new index rehashed
-        #         new_index = self._hash_mod(new_item.key)
-        #     #newstorage = LinkedPair
-        #         new_storage[new_index] = LinkedPair(new_item.key, new_item.value)
-
-        # self.storage=new_storage
+      
 
 
 
