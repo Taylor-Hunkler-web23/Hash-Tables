@@ -54,12 +54,21 @@ class HashTable:
         
     #take key and turn it into an index in array 
         index = self._hash_mod(key)
+        
 
     #check if something already at the index
         if self.storage[index] is not None:
-            print("Error: something at that index already")
 
-    #else put it there
+     #make new linked pair
+            LP= LinkedPair(key, value)
+
+    #set new to existing
+            LP.next = self.storage[index]
+            
+    #update index
+            self.storage[index] = LP
+
+    #else nothing was there so put it there
         else:
     # setting value at index to linked pair with they key and value
             self.storage[index] = LinkedPair(key, value)
@@ -101,18 +110,27 @@ class HashTable:
         #index
         index = self._hash_mod(key)
 
+        #if something at index
         if self.storage[index] is not None:
-
-    #if key matches
-            if self.storage[index].key == key:
-    # Retrieve the value stored with the given key.
-                return self.storage[index].value
-
-    #else, key not found, return none
-            else:
-                print("Error: key does not match")
-                return None
+            #set current to index
+            current = self.storage[index]
+            #while not none
+            while True:
+        #if key matches
+                if current.key == key:
+        #Retrieve the value stored with the given key.
+                    return current.value
+        #At the end of storage
+                elif current.next != None:
+        #set current to next
+                    current=current.next
+                else:
+                    return None
+                    
+        #key does not match anything        
         else:
+                print("Error: key does not match")
+
                 return None
 
 
@@ -122,21 +140,29 @@ class HashTable:
         Doubles the capacity of the hash table and
         rehash all key/value pairs.
 
-        Fill this in.
+        Fill this in.v 
         '''
+        #set current to old
+        old_storage = self.storage
         self.capacity *=2
-        new_storage = [None] * self.capacity
+        self.storage = [None] * self.capacity
 
-#rehash indexes
-        for new_item in self.storage:
-            if new_item is not None:
+#loop through old storage
+        for bucket_item in old_storage:
+            #if bucket_item not none
+            if bucket_item is not None:
+             
+                    #add key value
+                    self.insert(bucket_item.key, bucket_item.value)
+                    #set current to next bucket_item
+                    
 
-            #newindex rehashed
-                new_index = self._hash_mod(new_item.key)
-            #newstorage = LinkedPair
-                new_storage[new_index] = LinkedPair(new_item.key, new_item.value)
+        #     #new index rehashed
+        #         new_index = self._hash_mod(new_item.key)
+        #     #newstorage = LinkedPair
+        #         new_storage[new_index] = LinkedPair(new_item.key, new_item.value)
 
-        self.storage=new_storage
+        # self.storage=new_storage
 
 
 
