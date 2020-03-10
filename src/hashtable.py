@@ -51,7 +51,28 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        
+    #take key and turn it into an index in array 
+        index = self._hash_mod(key)
+        
+
+    #check if something already at the index
+        if self.storage[index] is not None:
+
+     #make new linked pair
+            LP= LinkedPair(key, value)
+
+    #set new to existing
+            LP.next = self.storage[index]
+            
+    #update index
+            self.storage[index] = LP
+
+    #else nothing was there so put it there
+        else:
+    # setting value at index to linked pair with they key and value
+            self.storage[index] = LinkedPair(key, value)
+
 
 
 
@@ -63,7 +84,19 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        #index
+        index = self._hash_mod(key)
+
+  # Print a warning if the key is not found
+        if self.storage[index] is None:
+            print("Error: key not found")
+        else:
+
+       #index reassigned to none
+            self.storage[index] =None
+            
+
+        
 
 
     def retrieve(self, key):
@@ -74,7 +107,32 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        #index
+        index = self._hash_mod(key)
+
+        #if something at index
+        if self.storage[index] is not None:
+            #set current to index
+            current = self.storage[index]
+            #while not none
+            while True:
+        #if key matches
+                if current.key == key:
+        #Retrieve the value stored with the given key.
+                    return current.value
+        #At the end of storage
+                elif current.next != None:
+        #set current to next
+                    current=current.next
+                else:
+                    return None
+                    
+        #key does not match anything        
+        else:
+                print("Error: key does not match")
+
+                return None
+
 
 
     def resize(self):
@@ -82,9 +140,27 @@ class HashTable:
         Doubles the capacity of the hash table and
         rehash all key/value pairs.
 
-        Fill this in.
+        Fill this in.v 
         '''
-        pass
+        #set current to old
+        old_storage = self.storage
+        self.capacity *=2
+        self.storage = [None] * self.capacity
+
+#loop through old storage
+        for bucket_item in old_storage:
+            #if bucket_item not none
+            if bucket_item is not None:
+                #set to bucket_item current
+                current = bucket_item
+                #while there is current
+                while current:
+                    #add key value
+                    self.insert(current.key, current.value)
+                    #set current to next 
+                    current = current.next
+
+      
 
 
 
