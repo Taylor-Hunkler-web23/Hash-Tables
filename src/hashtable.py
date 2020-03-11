@@ -87,14 +87,46 @@ class HashTable:
         #index
         index = self._hash_mod(key)
 
-  # Print a warning if the key is not found
+        #if nothing in index
         if self.storage[index] is None:
+        # Print a warning if the key is not found
             print("Error: key not found")
         else:
-
-       #index reassigned to none
-            self.storage[index] =None
+            previous =None
+            current= self.storage[index]
+            next=current.next
+        #while something at index
+            while self.storage[index] !=None:
             
+        #If key matches  
+                if current.key == key:
+            #if the node is the head
+                    if previous == None and next !=None:
+            #set current to next
+                        self.storage[index]= next
+                        break
+            #if node in middle
+                    if previous != None and next !=None:
+            #set node after previous to next
+                        previous.next=next
+                        break
+            #if node by itself
+                    if previous == None and next ==None:
+            #set to none
+                        self.storage[index]= None
+                        break
+            #if node at end
+                    if previous != None and next ==None:
+            #previous next is none
+                        previous.next=None
+                        break
+            #if key doesnt match
+                elif current.next !=None:
+            #move pointers
+                    previous=current
+                    current=current.next
+                    next=current.next
+           
 
         
 
